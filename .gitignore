@@ -1,5 +1,9 @@
 ### IntelliJ IDEA ###
+.idea/
+*.iml
 out/
+gen/
+.DS_Store/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .kotlin
