@@ -19,6 +19,7 @@ class GerenciadorDeTarefas {
     public static Scanner sc = new Scanner(System.in);
     public static ArrayList<Tarefa> historico = new ArrayList<>();
     public static int escolha;
+    public static String adicionarEscolha;
 
     static void main(){
         // rodar o menu até digitar 5 pra sair
@@ -78,47 +79,58 @@ class GerenciadorDeTarefas {
     }
 
     public static void escolha2() {
-        System.out.println("\nQual Tarefa deseja adicionar? ");
-        System.out.print("Digite: ");
-        String descricao = sc.nextLine();
+        do {
+            System.out.println("\nQual Tarefa deseja adicionar? ");
+            System.out.print("Digite: ");
+            String descricao = sc.nextLine();
 
-        // criando o objeto tarefa igual o digitado
-        Tarefa tarefa = new Tarefa(descricao);
-        historico.add(tarefa);
+            // criando o objeto tarefa igual o digitado
+            Tarefa tarefa = new Tarefa(descricao);
+            historico.add(tarefa);
 
-        System.out.println("\nTarefa adicionada com sucesso!\n");
+            System.out.println("\nTarefa adicionada com sucesso!\n");
+            System.out.println("Deseja adicionar mais alguma Tarefa? (S/N)");
+            adicionarOp();
+        } while (adicionarEscolha.equals("S"));
     }
 
     public static void escolha3(){
         if(historico.isEmpty()){
             System.out.println("\nLista vazia!\n");
         } else {
-            escolha1(); // mostra a lista para saber qual número escolher
+            do {
+                escolha1(); // mostra a lista para saber qual número escolher
 
-            System.out.print("\nQual tarefa deseja usar? \n");
-            System.out.print("Digite: ");
-            int escolherTarefa = sc.nextInt();
-            sc.nextLine();
-            int concluirTarefa = escolherTarefa - 1; // ajuste do índice 0
-
-            if (concluirTarefa >= 0 && concluirTarefa < historico.size()) {
-                Tarefa t = historico.get(concluirTarefa);
-                System.out.print("Você escolheu a Tarefa: " + (concluirTarefa + 1) + "\n" );
-                System.out.print("Deseja marcar essa tarefa como concluída? (S/N)\n");
+                System.out.print("\nQual tarefa deseja usar? \n");
                 System.out.print("Digite: ");
+                int escolherTarefa = sc.nextInt();
+                sc.nextLine();
+                int concluirTarefa = escolherTarefa - 1; // ajuste do índice 0
 
-                // joga pra maiúsculo pra aceitar 's' ou 'S'
-                String cTarefa = sc.nextLine().toUpperCase();
+                if (concluirTarefa >= 0 && concluirTarefa < historico.size()) {
+                    Tarefa t = historico.get(concluirTarefa);
+                    System.out.print("\nVocê escolheu a Tarefa: " + (concluirTarefa + 1) + "\n");
+                    System.out.print("Deseja marcar essa tarefa como concluída? (S/N)\n");
+                    System.out.print("Digite: ");
 
-                if (cTarefa.equals("S")) {
-                    t.concluida = true;
-                    System.out.println("\nTarefa concluída adicionada com sucesso!\n");
-                } else {
-                    System.out.println("Tarefa continua a espera...");
+                    // joga pra maiúsculo pra aceitar 's' ou 'S'
+                    String cTarefa = sc.nextLine().toUpperCase();
+
+                    if (cTarefa.equals("S")) {
+                        t.concluida = true;
+                        System.out.println("\nTarefa concluída adicionada com sucesso!\n");
+                        System.out.println("Deseja adicionar mais alguma Tarefa como concluída? (S/N)\n");
+                        adicionarOp();
+
+                    }else {
+                        t.concluida = false;
+                        System.out.println("Tarefa continua a espera...");
+                    }
+
+                }else {
+                    System.out.println("Valor invalido!");
                 }
-            } else {
-                System.out.println("Valor invalido!");
-            }
+            }while (adicionarEscolha.equals("S"));
         }
     }
 
@@ -126,20 +138,30 @@ class GerenciadorDeTarefas {
         if (historico.isEmpty()) {
             System.out.println("\nNenhum Tarefa para excluir Encontrada!\n");
         } else {
-            escolha1();
-            System.out.print("\nQual tarefa deseja excluir? ");
-            System.out.print("Digite: ");
+            do {
+                escolha1();
+                System.out.print("\nQual tarefa deseja excluir? ");
+                System.out.print("Digite: ");
 
-            int escolherTarefa = sc.nextInt();
-            sc.nextLine(); // limpeza de buffer
-            int rTarefa = escolherTarefa - 1;
+                int escolherTarefa = sc.nextInt();
+                sc.nextLine(); // limpeza de buffer
+                int rTarefa = escolherTarefa - 1;
 
-            if (rTarefa >= 0 && rTarefa < historico.size()) {
-                historico.remove(rTarefa);
-                System.out.println("\nTarefa removida com sucesso!\n");
-            } else {
-                System.out.println("Valor invalido!");
-            }
+                if (rTarefa >= 0 && rTarefa < historico.size()) {
+                    historico.remove(rTarefa);
+                    System.out.println("\nTarefa removida com sucesso!\n");
+                    System.out.println("Deseja remover mais alguma Tarefa? (S/N)");
+                    adicionarOp();
+                } else {
+                    System.out.println("Valor invalido!");
+                }
+            }while (adicionarEscolha.equals("S"));
         }
+    }
+    public static void adicionarOp(){
+
+        System.out.print("Digite: ");
+        adicionarEscolha = sc.nextLine().toUpperCase();
+
     }
 }
