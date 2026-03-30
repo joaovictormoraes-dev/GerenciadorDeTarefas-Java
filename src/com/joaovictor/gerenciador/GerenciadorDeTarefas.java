@@ -21,7 +21,7 @@ class GerenciadorDeTarefas {
     public static int escolha;
     public static String adicionarEscolha;
 
-    static void main(){
+    static void main(String[] args){
         // rodar o menu até digitar 5 pra sair
         do {
             listar();
